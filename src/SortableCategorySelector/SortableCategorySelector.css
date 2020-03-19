@@ -1,0 +1,39 @@
+.selected {
+  border-left-color: #5794ab !important;
+  border-left-width: 4px !important;
+  background-color: #f4f4f4 !important;
+}
+
+.deselected {
+  border-left-color: #e6e7e8 !important;
+  border-left-width: 4px !important;
+}
+
+.cursorMove {
+  cursor: move;
+}
+
+button .handler {
+  font-size: 12px;
+}
+
+button span {
+  color: #5794ab !important;
+  font-weight: bold;
+  font-size: 12px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.tool-box {
+  border-top-color: #a2cedf;
+  border-top-width: 4px;
+  border-top-style: solid;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+div .badge {
+  width: 38px;
+}
