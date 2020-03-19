@@ -19,4 +19,4 @@ Sample code
       onItemEditClick={(element) => { console.log(`Category ${element.name} 'edited'`); }}
       selectedElement={selectedElement}
    />
-´´´
+```
