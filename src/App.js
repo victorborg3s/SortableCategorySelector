@@ -47,20 +47,30 @@ function App() {
     },
   ];
 
+  const [message, setMessage] = useState('nothing (yet)');
   const [selectedElement, setSelectedElement] = useState(null);
 
   return (
-    <OrderableCategorySelector 
-      elements={elements}
-      label="Soccer Players"
-      onItemSelect={(element) => { 
-        setSelectedElement(element);
-        console.log(`Category ${element.name} selected`);
-      }}
-      onItemDeleteClick={(element) => { console.log(`Category ${element.name} 'deleted'`); }}
-      onItemEditClick={(element) => { console.log(`Category ${element.name} 'edited'`); }}
-      selectedElement={selectedElement}
-   />
+    <div>
+      <OrderableCategorySelector
+        elements={elements}
+        label="Soccer Players"
+        onItemSelect={element => {
+          setSelectedElement(element);
+          setMessage(`Category ${element.name} selected`);
+        }}
+        onItemDeleteClick={element => {
+          setMessage(`Category ${element.name} 'deleted'`);
+        }}
+        onItemEditClick={element => {
+          setMessage(`Category ${element.name} 'edited'`);
+        }}
+        selectedElement={selectedElement}
+      />
+      <div className="ml-4 mt-4">
+        <span><b>What's happening:</b> {message}</span>
+      </div>
+    </div>
   );
 }
 
