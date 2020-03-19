@@ -29,7 +29,7 @@ const SortableItem = SortableElement(
       <div
         tabIndex={0}
         role="menuitem"
-        onKeyDown={e => {
+        onKeyDown={(e) => {
           if (e.keyCode === 69 && e.ctrlKey) {
             onItemClick(value);
           }
@@ -48,7 +48,7 @@ const SortableItem = SortableElement(
             <button
               type="button"
               className="btn btn-link btn-sm mr-1"
-              onClick={e => {
+              onClick={(e) => {
                 e.stopPropagation();
                 onItemDeleteClick(value);
               }}
@@ -62,7 +62,7 @@ const SortableItem = SortableElement(
             <button
               type="button"
               className="btn btn-link btn-sm mr-1"
-              onClick={e => {
+              onClick={(e) => {
                 e.stopPropagation();
                 onItemEditClick(value);
               }}

@@ -25,9 +25,9 @@ const defaultProps = {
   selectedElement: null,
 };
 
-const SortableContainer = sortableContainer(({ children }) => {
-  return <ul className="list-group">{children}</ul>;
-});
+const SortableContainer = sortableContainer(({ children }) => (
+  <ul className="list-group">{children}</ul>
+));
 
 function SortableCategorySelector({
   elements,
