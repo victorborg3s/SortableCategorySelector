@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { sortableContainer } from 'react-sortable-hoc';
-import arrayMove from 'array-move';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 import SortableItem from './SortableItem';
@@ -14,6 +13,7 @@ const propTypes = {
   onItemSelect: PropTypes.func,
   onItemDeleteClick: PropTypes.func,
   onItemEditClick: PropTypes.func,
+  onSort: PropTypes.func,
   selectedElement: PropTypes.object,
 };
 
@@ -22,6 +22,7 @@ const defaultProps = {
   onItemSelect: () => {},
   onItemDeleteClick: null,
   onItemEditClick: null,
+  onSort: null,
   selectedElement: null,
 };
 
@@ -35,14 +36,14 @@ function SortableCategorySelector({
   onItemSelect,
   onItemDeleteClick,
   onItemEditClick,
+  onSort,
   overridePointerEvents,
   selectedElement,
 }) {
-  const [items, setItems] = useState([...elements]);
   const [isOpen, setIsOpen] = useState(true);
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
-    setItems(arrayMove(items, oldIndex, newIndex));
+    if (onSort) onSort(oldIndex, newIndex);
   };
 
   return (
@@ -68,7 +69,7 @@ function SortableCategorySelector({
             onSortEnd={onSortEnd}
             useDragHandle
           >
-            {items.map((value, index) => (
+            {elements.map((value, index) => (
               <SortableItem
                 key={`item-${value.id}`}
                 onItemClick={onItemSelect}

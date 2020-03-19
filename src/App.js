@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import arrayMove from 'array-move';
+
 import OrderableCategorySelector from './SortableCategorySelector';
 
 function App() {
-  const elements = [
+  const [elements, setElements] = useState([
     {
       id: 1,
       name: 'Goalkeeper',
@@ -45,30 +47,37 @@ function App() {
       quantity: 85,
       category: 'dark',
     },
-  ];
+  ]);
 
   const [message, setMessage] = useState('nothing (yet)');
   const [selectedElement, setSelectedElement] = useState(null);
 
+  function onSort(oldIndex, newIndex) {
+    setElements(arrayMove(elements, oldIndex, newIndex));
+  }
+
   return (
     <div>
       <OrderableCategorySelector
+        onSort={onSort}
         elements={elements}
         label="Soccer Players"
-        onItemSelect={element => {
+        onItemSelect={(element) => {
           setSelectedElement(element);
           setMessage(`Category ${element.name} selected`);
         }}
-        onItemDeleteClick={element => {
+        onItemDeleteClick={(element) => {
           setMessage(`Category ${element.name} 'deleted'`);
         }}
-        onItemEditClick={element => {
+        onItemEditClick={(element) => {
           setMessage(`Category ${element.name} 'edited'`);
         }}
         selectedElement={selectedElement}
       />
       <div className="ml-4 mt-4">
-        <span><b>What's happening:</b> {message}</span>
+        <span>
+          <b>What&apos;s happening:</b> {message}
+        </span>
       </div>
     </div>
   );
