@@ -50,7 +50,7 @@ const SortableItem = SortableElement(
               className="btn btn-link btn-sm mr-1"
               onClick={e => {
                 e.stopPropagation();
-                onItemDeleteClick(value.id);
+                onItemDeleteClick(value);
               }}
             >
               <FontAwesomeIcon icon={faTrashAlt} />
@@ -64,7 +64,7 @@ const SortableItem = SortableElement(
               className="btn btn-link btn-sm mr-1"
               onClick={e => {
                 e.stopPropagation();
-                onItemEditClick(value.id);
+                onItemEditClick(value);
               }}
             >
               <FontAwesomeIcon icon={faEdit} />

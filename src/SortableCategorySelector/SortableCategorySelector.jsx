@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import { sortableContainer, arrayMove } from 'react-sortable-hoc';
+import { sortableContainer } from 'react-sortable-hoc';
+import arrayMove from 'array-move';
 import PropTypes from 'prop-types';
 import Collapsible from 'react-collapsible';
 import SortableItem from './SortableItem';
@@ -10,7 +11,7 @@ import './SortableCategorySelector.css';
 const propTypes = {
   elements: PropTypes.array.isRequired,
   label: PropTypes.string,
-  onItemClick: PropTypes.func,
+  onItemSelect: PropTypes.func,
   onItemDeleteClick: PropTypes.func,
   onItemEditClick: PropTypes.func,
   selectedElement: PropTypes.object,
@@ -18,7 +19,7 @@ const propTypes = {
 
 const defaultProps = {
   label: '',
-  onItemClick: () => {},
+  onItemSelect: () => {},
   onItemDeleteClick: null,
   onItemEditClick: null,
   selectedElement: null,
@@ -31,7 +32,7 @@ const SortableContainer = sortableContainer(({ children }) => {
 function SortableCategorySelector({
   elements,
   label,
-  onItemClick,
+  onItemSelect,
   onItemDeleteClick,
   onItemEditClick,
   overridePointerEvents,
@@ -70,7 +71,7 @@ function SortableCategorySelector({
             {items.map((value, index) => (
               <SortableItem
                 key={`item-${value.id}`}
-                onItemClick={onItemClick}
+                onItemClick={onItemSelect}
                 onItemDeleteClick={onItemDeleteClick}
                 onItemEditClick={onItemEditClick}
                 index={index}
