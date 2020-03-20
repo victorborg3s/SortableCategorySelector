@@ -59,7 +59,7 @@ function App() {
   return (
     <div>
       <OrderableCategorySelector
-        onSort={onSort}
+        onItemSort={onSort}
         elements={elements}
         label="Soccer Players"
         onItemSelect={(element) => {
