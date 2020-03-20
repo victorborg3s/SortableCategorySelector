@@ -11,37 +11,37 @@ configure({ adapter: new Adapter() });
 describe('<SortableCategorySelector />', () => {
   it('should allow set an array of objects representing all elements', () => {
     // Arrange
-    const groupElements = [
+    const elements = [
       { id: 1, name: 'Element 1' },
       { id: 2, name: 'Element 2' },
     ];
     // Act
     const wrapper = mount(
-      <SortableCategorySelector elements={groupElements} />,
+      <SortableCategorySelector elements={elements} />,
     );
     // Assert
-    expect(wrapper.props().elements).toEqual(groupElements);
-    expect(wrapper.text().includes(groupElements[0].name)).toEqual(true);
-    expect(wrapper.text().includes(groupElements[1].name)).toEqual(true);
+    expect(wrapper.props().elements).toEqual(elements);
+    expect(wrapper.text().includes(elements[0].name)).toEqual(true);
+    expect(wrapper.text().includes(elements[1].name)).toEqual(true);
   });
 
   it('should allow set an label', () => {
     // Arrange
     const label = 'aLabel';
-    const groupElements = [
+    const elements = [
       { id: 1, name: 'Element 1' },
       { id: 2, name: 'Element 2' },
     ];
     // Act
     const wrapper = mount(
-      <SortableCategorySelector elements={groupElements} label={label} />,
+      <SortableCategorySelector elements={elements} label={label} />,
     );
     // Assert
     expect(wrapper.props().label).toEqual(label);
     expect(wrapper.text().includes(label)).toEqual(true);
   });
 
-  it('should allow select an element by clicking it', () => {
+  it('should allow select an element', () => {
     // Arrange
     const testState = {
       selectedElement: null,
@@ -50,6 +50,7 @@ describe('<SortableCategorySelector />', () => {
         { id: 2, name: 'Element 2' },
       ],
     };
+    const elementToSelect = testState.elements[0];
     const onSelectElement = (element) => {
       testState.selectedElement = element;
     };
@@ -57,15 +58,60 @@ describe('<SortableCategorySelector />', () => {
       <SortableCategorySelector
         elements={testState.elements}
         onItemSelect={onSelectElement}
+        selectedElement={testState.selectedElement}
       />,
     );
     // Act
-    wrapper
-      .find('li div')
-      .first()
-      .simulate('click');
+    wrapper.prop('onItemSelect')(elementToSelect);
+    wrapper.setProps({ selectedElement: testState.selectedElement });
+    wrapper.update();
     // Assert
-    expect(testState.selectedElement).toEqual(testState.elements[0]);
+    expect(testState.selectedElement).toEqual(elementToSelect);
+    expect(wrapper.props().selectedElement).toEqual(elementToSelect);
+  });
+
+  it('should allow delete an element', () => {
+    // Arrange
+    const elements = [
+      { id: 1, name: 'Element 1' },
+      { id: 2, name: 'Element 2' },
+      { id: 3, name: 'Element 3' },
+      { id: 4, name: 'Element 4' },
+    ];
+    const elementToDelete = elements[1];
+    let elementDeleted = null;
+    const deleteElement = (element) => {
+      elementDeleted = element;
+    };
+    const wrapper = mount(
+      <SortableCategorySelector elements={elements} onItemDeleteClick={deleteElement} />,
+    );
+    // Act
+    wrapper.prop('onItemDeleteClick')(elementToDelete);
+    // Assert
+    expect(elementDeleted).toBe(elementToDelete);
+  });
+
+  it('should allow edit an element', () => {
+    // Arrange
+    const elements = [
+      { id: 1, name: 'Element 1' },
+      { id: 2, name: 'Element 2' },
+      { id: 3, name: 'Element 3' },
+      { id: 4, name: 'Element 4' },
+    ];
+    const elementToEdit = elements[2];
+    let elementEdited = null;
+    const editElement = (element) => {
+      elementEdited = element;
+    };
+    const wrapper = mount(
+      <SortableCategorySelector elements={elements} onItemEditClick={editElement} />,
+    );
+    // Act
+    wrapper.prop('onItemEditClick')(elementToEdit);
+    // Assert
+    expect(elementEdited).toBe(elementToEdit);
   });
 
   it('should allow reorder elements', () => {
@@ -83,10 +129,10 @@ describe('<SortableCategorySelector />', () => {
       elements = arrayMove(elements, oldIndex, newIndex);
     };
     const wrapper = mount(
-      <SortableCategorySelector elements={elements} onSort={onSort} />,
+      <SortableCategorySelector elements={elements} onItemSort={onSort} />,
     );
     // Act
-    wrapper.prop('onSort')(elementToMoveIndex, elementToMoveEndingPosition);
+    wrapper.prop('onItemSort')(elementToMoveIndex, elementToMoveEndingPosition);
     // Assert
     expect(elements[elementToMoveEndingPosition].id).toEqual(elementToMove.id);
   });

@@ -13,7 +13,7 @@ const propTypes = {
   onItemSelect: PropTypes.func,
   onItemDeleteClick: PropTypes.func,
   onItemEditClick: PropTypes.func,
-  onSort: PropTypes.func,
+  onItemSort: PropTypes.func,
   selectedElement: PropTypes.object,
 };
 
@@ -22,7 +22,7 @@ const defaultProps = {
   onItemSelect: () => {},
   onItemDeleteClick: null,
   onItemEditClick: null,
-  onSort: null,
+  onItemSort: null,
   selectedElement: null,
 };
 
@@ -36,14 +36,14 @@ function SortableCategorySelector({
   onItemSelect,
   onItemDeleteClick,
   onItemEditClick,
-  onSort,
+  onItemSort,
   overridePointerEvents,
   selectedElement,
 }) {
   const [isOpen, setIsOpen] = useState(true);
 
   const onSortEnd = ({ oldIndex, newIndex }) => {
-    if (onSort) onSort(oldIndex, newIndex);
+    if (onItemSort) onItemSort(oldIndex, newIndex);
   };
 
   return (
